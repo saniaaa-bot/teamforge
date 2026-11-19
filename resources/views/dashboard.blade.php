@@ -26,7 +26,6 @@
 </head>
 <body class="min-h-screen bg-forge-light font-sans text-slate-800 flex">
 
-    <!-- Sidebar -->
     <aside class="w-72 bg-forge-dark text-slate-400 hidden md:flex flex-col border-r border-slate-800 shadow-2xl z-20 relative">
         <div class="h-20 flex items-center px-8 border-b border-slate-800">
             <div class="flex items-center gap-3">
@@ -67,9 +66,7 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
     <div class="flex-grow flex flex-col h-screen overflow-hidden relative">
-        
         <header class="h-20 bg-white/70 backdrop-blur-lg border-b border-slate-200 flex justify-between items-center px-8 z-10 sticky top-0">
             <div class="flex items-center gap-4">
                 <h2 class="text-xl font-heading font-bold text-slate-800">Overview</h2>
@@ -116,8 +113,7 @@
                         <div class="relative z-10 flex flex-col h-full justify-between">
                             <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Total Workspaces</p>
                             <div class="flex items-end gap-3">
-                                <h3 class="text-4xl font-heading font-extrabold text-slate-900">{{ auth()->user()->workspaces->count() }}</h3>
-                                <span class="text-sm font-medium text-green-600 mb-1">+0% from last week</span>
+                                <h3 class="text-4xl font-heading font-extrabold text-slate-900">{{ $totalWorkspaces }}</h3>
                             </div>
                         </div>
                     </div>
@@ -127,8 +123,7 @@
                         <div class="relative z-10 flex flex-col h-full justify-between">
                             <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Active Projects</p>
                             <div class="flex items-end gap-3">
-                                <h3 class="text-4xl font-heading font-extrabold text-slate-900">0</h3>
-                                <span class="text-sm font-medium text-slate-400 mb-1">No projects yet</span>
+                                <h3 class="text-4xl font-heading font-extrabold text-slate-900">{{ $totalProjects }}</h3>
                             </div>
                         </div>
                     </div>
@@ -136,10 +131,10 @@
                     <div class="bg-white p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/60 relative overflow-hidden group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all">
                         <div class="absolute right-0 top-0 w-32 h-32 bg-purple-50 rounded-bl-[100px] z-0 transition-transform group-hover:scale-110"></div>
                         <div class="relative z-10 flex flex-col h-full justify-between">
-                            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Pending Tasks</p>
+                            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Total Tasks</p>
                             <div class="flex items-end gap-3">
-                                <h3 class="text-4xl font-heading font-extrabold text-slate-900">0</h3>
-                                <span class="text-sm font-medium text-slate-400 mb-1">All caught up!</span>
+                                <h3 class="text-4xl font-heading font-extrabold text-slate-900">{{ $totalTasks }}</h3>
+                                <span class="text-sm font-medium text-green-600 mb-1">{{ $completedTasks }} completed</span>
                             </div>
                         </div>
                     </div>

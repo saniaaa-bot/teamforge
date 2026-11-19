@@ -4,14 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Workspace;
+use App\Models\Project;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 
 class WorkspaceController extends Controller
 {
     public function index()
     {
-        $workspaces = Auth::user()->workspaces;
-        return view('dashboard', compact('workspaces'));
+        $user = Auth::user();
+        $workspaces = $user->workspaces;
+
+        // Saare workspaces ke IDs nikaalein
+        $workspaceIds = $workspaces->pluck('id');
+
+        // Stats calculate karein
+        $totalWorkspaces = $workspaces->count();
+        
+        $totalProjects = Project::whereIn('workspace_id', $workspaceIds)->count();
+        
+        $totalTasks = Task::whereHas('project', function($query) use ($workspaceIds) {
+            $query->whereIn('workspace_id', $workspaceIds);
+        })->count();
+
+        $completedTasks = Task::whereHas('project', function($query) use ($workspaceIds) {
+            $query->whereIn('workspace_id', $workspaceIds);
+        })->where('status', 'done')->count();
+
+        return view('dashboard', compact(
+            'workspaces', 
+            'totalWorkspaces', 
+            'totalProjects', 
+            'totalTasks', 
+            'completedTasks'
+        ));
     }
 
     public function store(Request $request)
